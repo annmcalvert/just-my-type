@@ -23,7 +23,6 @@ $(document).keyup(function (e) {
 
 //gets ascii code from keypress and changes background color to yellow
 $(document).keypress(function (e) {
-    //console.log('Ascii : ' + e.which);
     let keyId = e.which;
     $('#' + keyId).css('background-color', 'yellow');
 });
@@ -40,16 +39,10 @@ $(document).keyup(function (e) {
 let letterNumber = 0;
 let sentenceNumber = 0;
 
-// //using .split to get each letter
-// let sentenceCurrent = sentences[sentenceNumber];
-// let eachLetterArray = sentenceCurrent.split('');
-// console.log(eachLetterArray);
-
-// //checks sentence length
-// sentenceLength = sentenceCurrent.length;
+// $('#target-letter').append($('<h1>').text('t'));
 
 //adds current sentence to div to be displayed
-$('#sentence').append($('<h4>').text(sentences[sentenceNumber]));
+$('#sentence').append($('<h3>').text(sentences[sentenceNumber]));
 
 //testing a function that checks if key a is pressed
 $(document).keypress(function (e) {
@@ -61,6 +54,10 @@ $(document).keypress(function (e) {
     let key = event.key;
     let eachLetter = eachLetterArray[letterNumber];
 
+    // $('#target-letter').empty();
+    // $('#target-letter').append($('<h1>').text(eachLetterArray[letterNumber + 1]));
+
+
     //checks sentence length
     sentenceLength = sentenceCurrent.length;
 
@@ -68,12 +65,13 @@ $(document).keypress(function (e) {
         console.log(letterNumber);
         console.log(eachLetter);
         letterNumber++;
+
     };
     if (letterNumber == sentenceLength && sentenceNumber < 4) {
         console.log(sentenceLength);
         sentenceNumber++;
         $('#sentence').empty();
-        $('#sentence').append($('<h4>').text(sentences[sentenceNumber]));
+        $('#sentence').append($('<h3>').text(sentences[sentenceNumber]));
         letterNumber = 0;
     };
 
@@ -81,3 +79,13 @@ $(document).keypress(function (e) {
         console.log('game over');
     }
 });
+
+
+
+
+//messing around with yellow div
+// let currentPosition = parseInt($("#yellow-block").css(''))
+// $('#yellow-block').
+
+//working on letter highlight by background-color
+//$('#sentence').css('background-color', 'yellow');
