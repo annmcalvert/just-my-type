@@ -35,22 +35,49 @@ $(document).keyup(function (e) {
     })
 })
 
-//pulls first sentence from array and adds it to div
-let sentence = $('<h4>').text(sentences[0]);
-$('#sentence').append(sentence);
 
-//practicing using .split to get each letter
-let sentenceTest = sentences[0];
-let eachLetterArray = sentenceTest.split('');
-//console.log(eachLetterArray);
-let eachLetter = eachLetterArray[0];
-console.log(eachLetter);
+
+let letterNumber = 0;
+let sentenceNumber = 0;
+
+// //using .split to get each letter
+// let sentenceCurrent = sentences[sentenceNumber];
+// let eachLetterArray = sentenceCurrent.split('');
+// console.log(eachLetterArray);
+
+// //checks sentence length
+// sentenceLength = sentenceCurrent.length;
+
+//adds current sentence to div to be displayed
+$('#sentence').append($('<h4>').text(sentences[sentenceNumber]));
 
 //testing a function that checks if key a is pressed
 $(document).keypress(function (e) {
+
+    //using .split to get each letter
+    let sentenceCurrent = sentences[sentenceNumber];
+    let eachLetterArray = sentenceCurrent.split('');
+
     let key = event.key;
-    //console.log(key);
+    let eachLetter = eachLetterArray[letterNumber];
+
+    //checks sentence length
+    sentenceLength = sentenceCurrent.length;
+
     if (key == eachLetter) {
-        console.log('test');
+        console.log(letterNumber);
+        console.log(eachLetter);
+        letterNumber++;
+    };
+    if (letterNumber == sentenceLength && sentenceNumber < 4) {
+        console.log(sentenceLength);
+        sentenceNumber++;
+        $('#sentence').empty();
+        $('#sentence').append($('<h4>').text(sentences[sentenceNumber]));
+        letterNumber = 0;
+    };
+
+    if (sentenceNumber == 4) {
+        console.log('game over');
     }
 });
