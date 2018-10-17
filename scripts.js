@@ -1,5 +1,20 @@
 //let sentences = ['ten ate neite ate nee enet ite ate inet ent eate', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
 let sentences = ['cat bat rat', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
+
+function formatSentence(sentence, letterIndex) {
+    const formattedSentence = sentence.split('').map((letter, i) => {
+        if (i === letterIndex) {
+            return '<span class="yellow">' + letter + '</span>';
+        } else {
+            return letter;
+        }
+    }).join('');
+    $('#sentence').empty();
+    $('#sentence').append($('<h3>').html(formattedSentence));
+  }
+
+
+
 //hides uppercase when page loads
 $(document).ready(function () {
     $('#keyboard-upper-container').hide();
@@ -63,21 +78,27 @@ $(document).keypress(function (e) {
     sentenceLength = sentenceCurrent.length;
 
 
-    let currentPosition = parseInt($("#yellow-block").css('margin-left'))
-    console.log(currentPosition);
+    //let currentPosition = parseInt($("#yellow-block").css('margin-left'))
+    //console.log(currentPosition);
 
 
     if (key == currentLetter) {
         console.log(letterNumber);
         console.log(currentLetter);
+
+        formatSentence(sentenceCurrent, letterNumber);
+            
         
+
         //displays the next letter expected
         $('#target-letter').empty();
         $('#target-letter').append($('<h1>').text(sentenceCurrent[letterNumber + 1]));
-        $('#yellow-block').css('margin-left', currentPosition + 17 + 'px');
         letterNumber++;
     };
 
+
+
+    //changes sentence when current is complete
     if (letterNumber == sentenceLength && sentenceNumber < 4) {
         console.log(sentenceLength);
         $('#sentence').empty();
@@ -85,6 +106,7 @@ $(document).keypress(function (e) {
         $('#sentence').append($('<h3>').text(sentences[sentenceNumber]));
         letterNumber = 0;
         $('#target-letter').append($('<h1>').text(sentences[sentenceNumber][0]));
+        formatSentence(sentences[sentenceNumber], letterNumber);
         
         
 
