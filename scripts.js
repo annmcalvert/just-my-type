@@ -1,5 +1,5 @@
 //let sentences = ['ten ate neite ate nee enet ite ate inet ent eate', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
-let sentences = ['cat bat rat', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
+let sentences = ['first sentence', 'hello world', 'ann calvert', 'praying mantis', 'last sentence'];
 
 function formatSentence(sentence, letterIndex) {
     const formattedSentence = sentence.split('').map((letter, index) => {
@@ -50,8 +50,9 @@ $(document).keyup(function (e) {
 let letterIndex = 0;
 let sentenceIndex = 0;
 
-//adds current sentence to div to be displayed and current letter
-formatSentence(sentences[sentenceIndex], 0);
+
+
+
 
 //testing a function that checks if key a is pressed
 $(document).keypress(function (e) {
@@ -61,27 +62,74 @@ $(document).keypress(function (e) {
     //checks sentence length
     let sentenceLength = sentenceCurrent.length;
     $('#feedback').removeClass();
-   
+
+    // if (!e.originalEvent.repeat) {
+    //     startDate = new Date();
+    // }
+
+    formatSentence(sentenceCurrent, letterIndex);
 
     if (key === currentLetter) {
         letterIndex++;
-        formatSentence(sentenceCurrent, letterIndex);   
+        //formatSentence(sentenceCurrent, letterIndex);   
         // $('#feedback').removeClass();
-        $('#feedback').addClass('glyphicon glyphicon-ok');     
+        $('#feedback').addClass('glyphicon glyphicon-ok');
     } else {
         // $('#feedback').removeClass();
-        $('#feedback').addClass('glyphicon glyphicon-remove'); 
+        $('#feedback').addClass('glyphicon glyphicon-remove');
     }
 
     //changes sentence when current is complete
-    if (letterIndex === sentenceLength && sentenceIndex < 4) {
+    if (letterIndex === sentenceLength && sentenceIndex <= 4) {
         sentenceIndex++;
         letterIndex = 0;
-        formatSentence(sentences[sentenceIndex], letterIndex);
+        //formatSentence(sentences[sentenceIndex], letterIndex);
+        //formatSentence(sentenceCurrent, letterIndex);
+
+        $('#feedback').removeClass();
     }
 
-    if (sentenceIndex == 4) {
+    if (sentenceIndex === 5) {
         console.log('game over');
+        endGame(startDate);
     }
 });
 
+
+//let stopDate = new Date();
+//let elapsedTime = stopDate.getTime() - startDate.getTime();
+
+let startDate = null;
+
+$('#start').click(function () {
+    startDate = new Date();
+    console.log(startDate);
+    //startGame();
+    $(this).remove();
+    //adds current sentence to div to be displayed and current letter
+    formatSentence(sentences[sentenceIndex], 0);
+})
+
+// $('#stop').click(function (){
+//     let stopDate = new Date();
+//     let elapsedTime = stopDate.getTime() - startDate.getTime();
+//     console.log(stopDate);
+//     console.log(elapsedTime);
+//     let elapsedMinutes = elapsedTime / 60000;
+//     console.log(elapsedMinutes);
+// })
+
+// function startGame () {
+//     startDate = new Date();
+//     console.log(startDate);
+// $('#target').remove('#start');
+// }
+
+function endGame(startDate) {
+    let stopDate = new Date();
+    let elapsedTime = stopDate.getTime() - startDate.getTime();
+    console.log(stopDate);
+    console.log(elapsedTime);
+    let elapsedMinutes = elapsedTime / 60000;
+    console.log(elapsedMinutes);
+}
