@@ -16,6 +16,7 @@ function formatSentence(sentence, letterIndex) {
 //hides uppercase when page loads
 $(document).ready(function () {
     $('#keyboard-upper-container').hide();
+
 });
 
 //shows uppercase when shift key is pressed
@@ -51,10 +52,6 @@ let letterIndex = 0;
 let sentenceIndex = 0;
 let mistakeNumber = 0;
 
-
-
-
-
 //testing a function that checks if key a is pressed
 $(document).keypress(function (e) {
     let sentenceCurrent = sentences[sentenceIndex];
@@ -64,19 +61,13 @@ $(document).keypress(function (e) {
     let sentenceLength = sentenceCurrent.length;
     $('#feedback').removeClass();
 
-    // if (!e.originalEvent.repeat) {
-    //     startDate = new Date();
-    // }
-
     formatSentence(sentenceCurrent, letterIndex);
 
     if (key === currentLetter) {
         letterIndex++;
         //formatSentence(sentenceCurrent, letterIndex);   
-        // $('#feedback').removeClass();
         $('#feedback').addClass('glyphicon glyphicon-ok');
     } else {
-        // $('#feedback').removeClass();
         $('#feedback').addClass('glyphicon glyphicon-remove');
         mistakeNumber++
     }
@@ -86,13 +77,10 @@ $(document).keypress(function (e) {
         sentenceIndex++;
         letterIndex = 0;
         //formatSentence(sentences[sentenceIndex], letterIndex);
-        //formatSentence(sentenceCurrent, letterIndex);
-
         $('#feedback').removeClass();
     }
 
     if (sentenceIndex === 5) {
-        console.log('game over');
         endGame(startDate);
     }
 });
@@ -101,22 +89,17 @@ $(document).keypress(function (e) {
 
 let startDate = null;
 
-$('#start').click(function () {
+$('#startButton').click(function () {
     mistakeNumber = 0;
     startDate = new Date();
     console.log(startDate);
-    $(this).remove();
+    //$('#startButton').disabled = true;
+    $('#startButton').hide();
     $('#startHeader').remove();
-    //adds current sentence to div to be displayed and current letter
+    $('#prompt-container').show();
+    $('#results').empty();
     formatSentence(sentences[sentenceIndex], 0);
 })
-
-
-// function startGame () {
-//     startDate = new Date();
-//     console.log(startDate);
-// $('#target').remove('#start');
-// }
 
 function endGame(startDate) {
     let stopDate = new Date();
@@ -127,9 +110,12 @@ function endGame(startDate) {
     console.log(elapsedMinutes);
     let WPM = Math.round(54 / elapsedMinutes - 2 * mistakeNumber);
     $('#prompt-container').hide();
-    $('#startAndResults').html('<h3>Your WPM score is:</h3><br><p>' + WPM + '</p><h3>Would you like to play again?</h3>');
+    $('#results').html('<h3>Your WPM score is:</h3><br><p>' + WPM + '</p><h3>Would you like to play again?</h3>');
+    $('#startButton').show();
+    sentenceIndex = 0;   
 }
 
 
-//I want to disable and hide button upon start, and then enable and show it when game ends.
+//I hide the button and then show it.  I need to check to be sure it is disabled also.
 //some timing is still of with highlighting and current expected letter.
+
