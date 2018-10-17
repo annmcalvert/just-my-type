@@ -49,6 +49,7 @@ $(document).keyup(function (e) {
 
 let letterIndex = 0;
 let sentenceIndex = 0;
+let mistakeNumber = 0;
 
 
 
@@ -77,6 +78,7 @@ $(document).keypress(function (e) {
     } else {
         // $('#feedback').removeClass();
         $('#feedback').addClass('glyphicon glyphicon-remove');
+        mistakeNumber++
     }
 
     //changes sentence when current is complete
@@ -96,28 +98,19 @@ $(document).keypress(function (e) {
 });
 
 
-//let stopDate = new Date();
-//let elapsedTime = stopDate.getTime() - startDate.getTime();
 
 let startDate = null;
 
 $('#start').click(function () {
+    mistakeNumber = 0;
     startDate = new Date();
     console.log(startDate);
-    //startGame();
     $(this).remove();
+    $('#startHeader').remove();
     //adds current sentence to div to be displayed and current letter
     formatSentence(sentences[sentenceIndex], 0);
 })
 
-// $('#stop').click(function (){
-//     let stopDate = new Date();
-//     let elapsedTime = stopDate.getTime() - startDate.getTime();
-//     console.log(stopDate);
-//     console.log(elapsedTime);
-//     let elapsedMinutes = elapsedTime / 60000;
-//     console.log(elapsedMinutes);
-// })
 
 // function startGame () {
 //     startDate = new Date();
@@ -132,4 +125,11 @@ function endGame(startDate) {
     console.log(elapsedTime);
     let elapsedMinutes = elapsedTime / 60000;
     console.log(elapsedMinutes);
+    let WPM = Math.round(54 / elapsedMinutes - 2 * mistakeNumber);
+    $('#prompt-container').hide();
+    $('#startAndResults').html('<h3>Your WPM score is:</h3><br><p>' + WPM + '</p><h3>Would you like to play again?</h3>');
 }
+
+
+//I want to disable and hide button upon start, and then enable and show it when game ends.
+//some timing is still of with highlighting and current expected letter.
