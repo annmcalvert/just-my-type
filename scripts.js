@@ -2,18 +2,16 @@
 let sentences = ['cat bat rat', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
 
 function formatSentence(sentence, letterIndex) {
-    const formattedSentence = sentence.split('').map((letter, i) => {
-        if (i === letterIndex) {
+    const formattedSentence = sentence.split('').map((letter, index) => {
+        if (index === letterIndex) {
+            $('#target-letter').text(letter);
             return '<span class="yellow">' + letter + '</span>';
         } else {
             return letter;
         }
     }).join('');
-    $('#sentence').empty();
-    $('#sentence').append($('<h3>').html(formattedSentence));
-  }
-
-
+    $('#sentence').html(formattedSentence);
+}
 
 //hides uppercase when page loads
 $(document).ready(function () {
@@ -49,82 +47,41 @@ $(document).keyup(function (e) {
     })
 })
 
+let letterIndex = 0;
+let sentenceIndex = 0;
 
-
-let letterNumber = 0;
-let sentenceNumber = 0;
-
-//displays the next letter expected
-$('#target-letter').append($('<h1>').text('t'));
-
-//adds current sentence to div to be displayed
-$('#sentence').append($('<h3>').text(sentences[sentenceNumber]));
+//adds current sentence to div to be displayed and current letter
+formatSentence(sentences[sentenceIndex], 0);
 
 //testing a function that checks if key a is pressed
 $(document).keypress(function (e) {
-
-    //using .split to get each letter
-    let sentenceCurrent = sentences[sentenceNumber];
-    let currentLetter = sentenceCurrent[letterNumber];
-
-
+    let sentenceCurrent = sentences[sentenceIndex];
+    let currentLetter = sentenceCurrent[letterIndex];
     let key = event.key;
+    //checks sentence length
+    let sentenceLength = sentenceCurrent.length;
+    $('#feedback').removeClass();
    
 
-
-
-
-    //checks sentence length
-    sentenceLength = sentenceCurrent.length;
-
-
-    //let currentPosition = parseInt($("#yellow-block").css('margin-left'))
-    //console.log(currentPosition);
-
-
-    if (key == currentLetter) {
-        console.log(letterNumber);
-        console.log(currentLetter);
-
-        formatSentence(sentenceCurrent, letterNumber);
-            
-        
-
-        //displays the next letter expected
-        $('#target-letter').empty();
-        $('#target-letter').append($('<h1>').text(sentenceCurrent[letterNumber + 1]));
-        letterNumber++;
-    };
-
-
+    if (key === currentLetter) {
+        letterIndex++;
+        formatSentence(sentenceCurrent, letterIndex);   
+        // $('#feedback').removeClass();
+        $('#feedback').addClass('glyphicon glyphicon-ok');     
+    } else {
+        // $('#feedback').removeClass();
+        $('#feedback').addClass('glyphicon glyphicon-remove'); 
+    }
 
     //changes sentence when current is complete
-    if (letterNumber == sentenceLength && sentenceNumber < 4) {
-        console.log(sentenceLength);
-        $('#sentence').empty();
-        sentenceNumber++;
-        $('#sentence').append($('<h3>').text(sentences[sentenceNumber]));
-        letterNumber = 0;
-        $('#target-letter').append($('<h1>').text(sentences[sentenceNumber][0]));
-        formatSentence(sentences[sentenceNumber], letterNumber);
-        
-        
+    if (letterIndex === sentenceLength && sentenceIndex < 4) {
+        sentenceIndex++;
+        letterIndex = 0;
+        formatSentence(sentences[sentenceIndex], letterIndex);
+    }
 
-    };
-
-    if (sentenceNumber == 4) {
+    if (sentenceIndex == 4) {
         console.log('game over');
     }
 });
 
-
-
-
-//messing around with yellow div
-// let currentPosition = parseInt($("#yellow-block").css(''))
-// $('#yellow-block').css('margin-left', currentPosition + 20 + 'px');
-
-
-
-//working on letter highlight by background-color
-//$('#sentence').css('background-color', 'yellow');
