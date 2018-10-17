@@ -1,5 +1,5 @@
-let sentences = ['ten ate neite ate nee enet ite ate inet ent eate', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
-
+//let sentences = ['ten ate neite ate nee enet ite ate inet ent eate', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
+let sentences = ['cat bat rat', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
 //hides uppercase when page loads
 $(document).ready(function () {
     $('#keyboard-upper-container').hide();
@@ -39,7 +39,8 @@ $(document).keyup(function (e) {
 let letterNumber = 0;
 let sentenceNumber = 0;
 
-// $('#target-letter').append($('<h1>').text('t'));
+//displays the next letter expected
+$('#target-letter').append($('<h1>').text('t'));
 
 //adds current sentence to div to be displayed
 $('#sentence').append($('<h3>').text(sentences[sentenceNumber]));
@@ -49,30 +50,44 @@ $(document).keypress(function (e) {
 
     //using .split to get each letter
     let sentenceCurrent = sentences[sentenceNumber];
-    let eachLetterArray = sentenceCurrent.split('');
+    let currentLetter = sentenceCurrent[letterNumber];
+
 
     let key = event.key;
-    let eachLetter = eachLetterArray[letterNumber];
+   
 
-    // $('#target-letter').empty();
-    // $('#target-letter').append($('<h1>').text(eachLetterArray[letterNumber + 1]));
+
 
 
     //checks sentence length
     sentenceLength = sentenceCurrent.length;
 
-    if (key == eachLetter) {
-        console.log(letterNumber);
-        console.log(eachLetter);
-        letterNumber++;
 
+    let currentPosition = parseInt($("#yellow-block").css('margin-left'))
+    console.log(currentPosition);
+
+
+    if (key == currentLetter) {
+        console.log(letterNumber);
+        console.log(currentLetter);
+        
+        //displays the next letter expected
+        $('#target-letter').empty();
+        $('#target-letter').append($('<h1>').text(sentenceCurrent[letterNumber + 1]));
+        $('#yellow-block').css('margin-left', currentPosition + 17 + 'px');
+        letterNumber++;
     };
+
     if (letterNumber == sentenceLength && sentenceNumber < 4) {
         console.log(sentenceLength);
-        sentenceNumber++;
         $('#sentence').empty();
+        sentenceNumber++;
         $('#sentence').append($('<h3>').text(sentences[sentenceNumber]));
         letterNumber = 0;
+        $('#target-letter').append($('<h1>').text(sentences[sentenceNumber][0]));
+        
+        
+
     };
 
     if (sentenceNumber == 4) {
@@ -85,7 +100,9 @@ $(document).keypress(function (e) {
 
 //messing around with yellow div
 // let currentPosition = parseInt($("#yellow-block").css(''))
-// $('#yellow-block').
+// $('#yellow-block').css('margin-left', currentPosition + 20 + 'px');
+
+
 
 //working on letter highlight by background-color
 //$('#sentence').css('background-color', 'yellow');
